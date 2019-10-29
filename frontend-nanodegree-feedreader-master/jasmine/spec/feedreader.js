@@ -34,9 +34,9 @@ $(function() {
          */
         it('URL is defined', function() {
             //these expectations are to ensuer that all feeds have URLs and not empty.
-            for (allFeeds.url of allFeeds){
-                expect(allFeeds.url).toBeDefined();
-                expect(allFeeds.url.length).not.toBe(0);
+            for (let feed of allFeeds){
+                expect(feed.url).toBeDefined();
+                expect(feed.url.length).not.toBe(0);
             }
         });
 
@@ -46,9 +46,9 @@ $(function() {
          */
         it('Name is defined', function() {
             //these expectations are to ensuer that all feeds have names and not empty.
-            for (allFeeds.name of allFeeds){
-                expect(allFeeds.name).toBeDefined();
-                expect(allFeeds.name.length).not.toBe(0);
+            for (let feed of allFeeds){
+                expect(feed.name).toBeDefined();
+                expect(feed.name.length).not.toBe(0);
             }
         });
     });
@@ -96,16 +96,14 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function (done) {
-            loadFeed(0, function() {
-                done();
-            });
+            loadFeed(0, done);
         });
 
-        it('There is at least a single element within the feed container', function(done) {
+        it('There is at least a single element within the feed container', function() {
             // after loading loadfeed function, container is checked for containing at least one entry.
-            let entry = document.querySelector('div.feed.entry');
-            expect(entry).toBeDefined();
-            done();
+            let feeds = document.querySelector('div.feed');
+            let entries = feeds.querySelectorAll('article.entry');
+            expect(entries.length).toBeGreaterThan(0);
         });
     });
 
@@ -122,11 +120,10 @@ $(function() {
          beforeEach(function(done) {
             loadFeed(0, function() {
                 first = document.querySelector('.feed').children[0].text;
-                done();
-            });
-            loadFeed(1, function() {
+                loadFeed(1, function() {
                 seconed = document.querySelector('.feed').children[1].text;
                 done();
+                });
             });
          });
 
